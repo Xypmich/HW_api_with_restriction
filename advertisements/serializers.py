@@ -63,11 +63,4 @@ class AdvertisementSerializer(serializers.ModelSerializer):
                     'You have reached maximum limit of open advertisements (10/10). '
                     'Please, close or delete at least one advertisement'
                 )
-        elif request_method == 'DELETE':
-            adv_number = int(self.context['request'].parser_context['kwargs']['pk'])
-            adv_creator = Advertisement.objects.get(id=adv_number).creator
-            if not request_token == adv_creator.auth_token:
-                raise serializers.ValidationError(
-                    'No permissions to delete: Advertisement not created by current user.'
-                )
         return data
